@@ -18,23 +18,22 @@ WORKDIR /app
 
 COPY hello.py .
 
-CMD ["python", "hello.py"]
+CMD ["python", "hello.py"]```
 
-```
 
 **Build the image:**
 ​```bash
 docker build -t hello-devops .
 ​```
 
-```
+
 **Run the container:**
 ​```bash
 docker run hello-devops
 ​```
 
 **Expected output:**
-​```
+
 ```
 Hello, DevOps!
 ​```
