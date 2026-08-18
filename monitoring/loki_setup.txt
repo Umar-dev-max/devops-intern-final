@@ -1,0 +1,77 @@
+Grafana Loki Monitoring Setup
+=============================
+
+Project: DevOps Intern Final Assessment
+Author: Muhammad Umar Khan
+Date: 18 August 2026
+
+1. Loki Setup
+-------------
+
+Loki was started locally using Docker:
+
+docker run -d \
+  --name loki \
+  --network monitoring \
+  -p 3100:3100 \
+  grafana/loki:latest \
+  -config.file=/etc/loki/local-config.yaml
+
+Loki readiness was checked with:
+
+curl http://localhost:3100/ready
+
+The response was:
+
+ready
+
+
+2. Promtail Setup
+-----------------
+
+Promtail was used to collect Docker container logs and forward them
+to Loki.
+
+Promtail was started with:
+
+docker run -d \
+  --name promtail \
+  --network monitoring \
+  -v /var/lib/docker/containers:/var/lib/docker/containers:ro \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  -v "$(pwd)/monitoring/promtail-config.yml:/etc/promtail/config.yml:ro" \
+  grafana/promtail:latest \
+  -config.file=/etc/promtail/config.yml
+
+
+3. Log Source
+-------------
+
+The Nomad-deployed Docker container was:
+
+hello-devops
+
+Docker logs were verified with:
+
+docker logs ed5da295dbf8
+
+Example output:
+
+Hello, DevOps!
+
+
+4. Viewing Logs in Loki
+-----------------------
+
+Loki logs were queried using LogQL:
+
+curl -G -s http://localhost:3100/loki/api/v1/query_range \
+  --data-urlencode 'query={container="hello-devops"} |= "Hello"' \
+  --data-urlencode 'limit=20'
+
+The query returned application log entries including:
+
+Hello, DevOps!
+
+This confirmed that Docker logs from the Nomad deployment were
+successfully forwarded to Grafana Loki through Promtail.
