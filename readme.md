@@ -12,7 +12,6 @@ The `hello.py` script is containerized using Docker.
 **Dockerfile:**
 
 ​```
-
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -20,14 +19,15 @@ WORKDIR /app
 COPY hello.py .
 
 CMD ["python", "hello.py"]
-```
 
+```
 
 **Build the image:**
 ​```bash
 docker build -t hello-devops .
 ​```
 
+```
 **Run the container:**
 ​```bash
 docker run hello-devops
@@ -35,5 +35,6 @@ docker run hello-devops
 
 **Expected output:**
 ​```
+```
 Hello, DevOps!
 ​```
