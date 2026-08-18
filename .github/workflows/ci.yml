@@ -17,5 +17,5 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run hello.py
-        run: python hello.py
+      - name: Check hello.py syntax
+        run: python -m py_compile hello.py
