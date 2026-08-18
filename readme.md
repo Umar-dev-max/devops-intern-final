@@ -11,7 +11,8 @@ The `hello.py` script is containerized using Docker.
 
 **Dockerfile:**
 
-​```dockerfile
+```​
+dockerfile
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -19,8 +20,8 @@ WORKDIR /app
 COPY hello.py .
 
 CMD ["python", "hello.py"]
+```
 
-​```
 
 **Build the image:**
 ​```bash
